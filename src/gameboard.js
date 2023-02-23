@@ -4,6 +4,8 @@ import Ship from "./ship";
 export default class Gameboard {
   constructor() {
     this.grid = this._generateGrid();
+    this.attacks = [];
+    this.ships = [];
   }
 
   _generateGrid() {
@@ -18,15 +20,6 @@ export default class Gameboard {
   }
 
   placeShip(length, row, column) {
-    const ship = new Ship(length);
-    // for (let j = 0; j < length; j += 1) {
-    //   for (let i = 0; i < this.grid.length; i += 1) {
-    //     if (this.grid[i][0] === row && this.grid[i][1] === column) {
-    //       this.grid[i + j] = [row, column + j, ship];
-    //     }
-    //   }
-    // }
-
     // Check if the ship placement is valid
     for (let j = 0; j < length; j += 1) {
       const cell = this.grid.find(
@@ -37,6 +30,9 @@ export default class Gameboard {
       }
     }
 
+    const ship = new Ship(length);
+    this.ships.push(ship);
+
     // Place the ship in the cells
     for (let j = 0; j < length; j += 1) {
       const cell = this.grid.find(
@@ -44,5 +40,43 @@ export default class Gameboard {
       );
       cell[2] = ship;
     }
+  }
+
+  receiveAttack(row, column) {
+    const [targetRow, targetColumn] = [row, column];
+
+    if (
+      targetRow < 0 ||
+      targetRow >= 10 ||
+      targetColumn < 0 ||
+      targetColumn >= 10
+    ) {
+      throw new Error("Out of bounds");
+    }
+
+    const cell = this.grid.find(
+      ([r, col]) => r === targetRow && col === targetColumn
+    );
+
+    if (!cell) {
+      throw new Error("Cell not found");
+    }
+
+    if (cell[2]) {
+      cell[2].hit();
+      this.attacks.push([targetRow, targetColumn, "+"]);
+      return true;
+    }
+
+    this.attacks.push([targetRow, targetColumn, "-"]);
+    return false;
+  }
+
+  areAllShipsSunk() {
+    for (let i = 0; i < this.ships.length; i += 1) {
+      if (!this.ships[i].isSunk()) return false;
+    }
+
+    return true;
   }
 }
