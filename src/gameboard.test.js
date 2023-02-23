@@ -1,6 +1,7 @@
 import Gameboard from "./gameboard";
 import Ship from "./ship";
 
+//TODO allow placing ships vertically and horizontally
 test("placeShip() method", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5);
@@ -22,6 +23,7 @@ test("Place ship on already existing ship", () => {
   expect(() => player1.placeShip(5, 4, 0)).toThrow(Error);
 });
 
+//TODO check if coordinates have already been attacked
 test("receiveAttack method", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5);
@@ -29,6 +31,7 @@ test("receiveAttack method", () => {
   expect(player1.receiveAttack(3, 6)).toBeTruthy();
   expect(player1.receiveAttack(2, 7)).toBeFalsy();
   expect(() => player1.receiveAttack(-1, 9)).toThrow(Error);
+  expect(() => player1.receiveAttack(2, 7)).toThrow(Error);
 });
 
 test("Check if Gameboard object is reporting wether or not all ships have been sunk", () => {

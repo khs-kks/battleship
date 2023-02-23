@@ -62,6 +62,12 @@ export default class Gameboard {
       throw new Error("Cell not found");
     }
 
+    if (
+      this.attacks.find(([r, col]) => r === targetRow && col === targetColumn)
+    ) {
+      throw new Error("Cell already attacked");
+    }
+
     if (cell[2]) {
       cell[2].hit();
       this.attacks.push([targetRow, targetColumn, "+"]);
