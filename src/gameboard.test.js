@@ -2,18 +2,24 @@ import Gameboard from "./gameboard";
 import Ship from "./ship";
 
 //TODO allow placing ships vertically and horizontally
-test("placeShip() method", () => {
+test("placeShip method for horizontal placement", () => {
   const player1 = new Gameboard();
-  player1.placeShip(3, 3, 5);
+  player1.placeShip(3, 3, 5, "horizontal");
   expect(player1.grid).not.toContainEqual([3, 5, null]);
   expect(player1.grid).not.toContainEqual([3, 6, null]);
   expect(player1.grid).not.toContainEqual([3, 7, null]);
   expect(player1.grid).toContainEqual([3, 8, null]);
 });
 
-test("placeShip out of grid", () => {
+test("placeShip method for vertical placement", () => {
   const player1 = new Gameboard();
-  expect(() => player1.placeShip(3, 5, 8)).toThrow(Error);
+  player1.placeShip(3, 3, 5, "vertical");
+
+  expect(player1.grid).not.toContainEqual([3, 5, null]);
+  expect(player1.grid).not.toContainEqual([4, 5, null]);
+  expect(player1.grid).not.toContainEqual([5, 5, null]);
+  expect(player1.grid).toContainEqual([2, 5, null]);
+  expect(player1.grid).toContainEqual([6, 5, null]);
 });
 
 test("Place ship on already existing ship", () => {
@@ -23,7 +29,11 @@ test("Place ship on already existing ship", () => {
   expect(() => player1.placeShip(5, 4, 0)).toThrow(Error);
 });
 
-//TODO check if coordinates have already been attacked
+test("placeShip out of grid", () => {
+  const player1 = new Gameboard();
+  expect(() => player1.placeShip(3, 5, 8)).toThrow(Error);
+});
+
 test("receiveAttack method", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5);

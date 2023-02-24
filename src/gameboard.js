@@ -1,6 +1,8 @@
-import Ship from "./ship";
+/* eslint-disable no-shadow */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
+import Ship from "./ship";
+
 export default class Gameboard {
   constructor() {
     this.grid = this._generateGrid();
@@ -19,26 +21,95 @@ export default class Gameboard {
     return arr;
   }
 
-  placeShip(length, row, column) {
-    // Check if the ship placement is valid
-    for (let j = 0; j < length; j += 1) {
-      const cell = this.grid.find(
-        (field) => field[0] === row && field[1] === column + j
-      );
+  // placeShip(length, row, column, placement = "horizontal") {
+  //   if (placement === "horizontal") {
+  //     // Check if the ship placement is valid
+  //     for (let j = 0; j < length; j += 1) {
+  //       const cell = this.grid.find(
+  //         (field) => field[0] === row && field[1] === column + j
+  //       );
+  //       if (!cell || cell[2]) {
+  //         throw new Error("Invalid ship placement");
+  //       }
+  //     }
+
+  //     const ship = new Ship(length);
+  //     this.ships.push(ship);
+
+  //     // Place the ship in the cells
+  //     for (let j = 0; j < length; j += 1) {
+  //       const cell = this.grid.find(
+  //         (field) => field[0] === row && field[1] === column + j
+  //       );
+  //       cell[2] = ship;
+  //     }
+  //   } else if (placement === "vertical") {
+  //     // Check if the ship placement is valid
+  //     for (let j = 0; j < length; j += 1) {
+  //       const cell = this.grid.find(
+  //         (field) => field[0] === row + j && field[1] === column
+  //       );
+  //       if (!cell || cell[2]) {
+  //         throw new Error("Invalid ship placement");
+  //       }
+  //     }
+  //     const ship = new Ship(length);
+  //     this.ships.push(ship);
+
+  //     // Place the ship in the cells
+  //     for (let j = 0; j < length; j += 1) {
+  //       const cell = this.grid.find(
+  //         (field) => field[0] === row + j && field[1] === column
+  //       );
+  //       cell[2] = ship;
+  //     }
+  //   }
+  // }
+
+  placeShip(length, row, column, placement = "horizontal") {
+    const checkCell = (j, getCell) => {
+      const cell = getCell(j);
       if (!cell || cell[2]) {
         throw new Error("Invalid ship placement");
       }
-    }
+    };
+
+    const placeShipInCell = (j, getCell, ship) => {
+      const cell = getCell(j);
+      cell[2] = ship;
+    };
 
     const ship = new Ship(length);
     this.ships.push(ship);
 
-    // Place the ship in the cells
-    for (let j = 0; j < length; j += 1) {
-      const cell = this.grid.find(
-        (field) => field[0] === row && field[1] === column + j
-      );
-      cell[2] = ship;
+    if (placement === "horizontal") {
+      for (let j = 0; j < length; j += 1) {
+        checkCell(j, (j) =>
+          this.grid.find((field) => field[0] === row && field[1] === column + j)
+        );
+        placeShipInCell(
+          j,
+          (j) =>
+            this.grid.find(
+              (field) => field[0] === row && field[1] === column + j
+            ),
+          ship
+        );
+      }
+    } else if (placement === "vertical") {
+      for (let j = 0; j < length; j += 1) {
+        checkCell(j, (j) =>
+          this.grid.find((field) => field[0] === row + j && field[1] === column)
+        );
+        placeShipInCell(
+          j,
+          (j) =>
+            this.grid.find(
+              (field) => field[0] === row + j && field[1] === column
+            ),
+          ship
+        );
+      }
     }
   }
 
