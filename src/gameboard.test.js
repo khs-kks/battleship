@@ -14,12 +14,16 @@ test("placeShip method for horizontal placement", () => {
 test("placeShip method for vertical placement", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5, "vertical");
-
+  player1.placeShip(5, 0, 0, "vertical");
   expect(player1.grid).not.toContainEqual([3, 5, null]);
   expect(player1.grid).not.toContainEqual([4, 5, null]);
   expect(player1.grid).not.toContainEqual([5, 5, null]);
   expect(player1.grid).toContainEqual([2, 5, null]);
   expect(player1.grid).toContainEqual([6, 5, null]);
+
+  expect(player1.grid).not.toContainEqual([0, 0, null]);
+  expect(player1.grid).not.toContainEqual([4, 0, null]);
+
 });
 
 test("Place ship on already existing ship", () => {
@@ -37,11 +41,14 @@ test("placeShip out of grid", () => {
 test("receiveAttack method", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5);
+  player1.placeShip(5, 0, 0, "vertical");
 
   expect(player1.receiveAttack(3, 6)).toBeTruthy();
   expect(player1.receiveAttack(2, 7)).toBeFalsy();
   expect(() => player1.receiveAttack(-1, 9)).toThrow(Error);
   expect(() => player1.receiveAttack(2, 7)).toThrow(Error);
+  expect(player1.receiveAttack(0,0)).toBeTruthy();
+  expect(player1.receiveAttack(4,0)).toBeTruthy();
 });
 
 test("Check if Gameboard object is reporting wether or not all ships have been sunk", () => {
