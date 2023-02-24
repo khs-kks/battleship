@@ -80,7 +80,6 @@ export default class Gameboard {
     };
 
     const ship = new Ship(length);
-    this.ships.push(ship);
 
     if (placement === "horizontal") {
       for (let j = 0; j < length; j += 1) {
@@ -111,6 +110,7 @@ export default class Gameboard {
         );
       }
     }
+    this.ships.push(ship);
   }
 
   receiveAttack(row, column) {
