@@ -21,11 +21,6 @@ body {
     "Segoe UI Symbol";
 }
 
-/* body {
-  height: 100vh;
-  width: 100vw;
-} */
-
 .body-wrapper {
   border: 1px solid red;
   height: 100vh;
@@ -64,12 +59,12 @@ a {
   border: none;
   cursor: pointer;
   position: relative;
-  transition: font-size 0.1s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 }
 
 .home:hover,
 .how-to:hover {
-  font-size: 1.2rem;
+  transform: scale(1.2);
 }
 
 .home::before,
@@ -94,7 +89,7 @@ a:hover::before {
 /* MODAL */
 
 .username-modal {
-  display: block;
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -118,7 +113,6 @@ a:hover::before {
 .username-form {
   display: grid;
   grid-template-rows: 2fr 1fr;
-  /* gap: var(--spacing-lg); */
 }
 
 .username-form label {
@@ -131,15 +125,11 @@ a:hover::before {
   justify-self: center;
   align-self: center;
   font-size: 1.3rem;
-  /* overflow: auto; */
 }
 
 .username-form input {
   width: 80%;
   transition: transform 0.2s ease-in-out;
-
-  /* padding: var(--spacing-sm); */
-
 }
 
 .username-form input:focus {
