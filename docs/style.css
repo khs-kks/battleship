@@ -1,6 +1,7 @@
 :root {
   --light: #e5ebeb;
   --dark: #403e39;
+  --button-backgroud: #1d75da;
   --border-radius: 5px;
   --spacing-xs: 5px;
   --spacing-sm: 10px;
@@ -68,7 +69,7 @@ a {
 
 .home:hover,
 .how-to:hover {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .home::before,
@@ -90,4 +91,76 @@ a:hover::before {
   width: 100%;
 }
 
+/* MODAL */
 
+.username-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.username-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: var(--border-radius);
+  width: 50%;
+  max-width: 500px;
+}
+
+.username-form {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  /* gap: var(--spacing-lg); */
+}
+
+.username-form label {
+  display: block;
+  font-weight: bold;
+  color: var(--dark);
+}
+
+.username-form * {
+  justify-self: center;
+  align-self: center;
+  font-size: 1.3rem;
+  /* overflow: auto; */
+}
+
+.username-form input {
+  width: 80%;
+  transition: transform 0.2s ease-in-out;
+
+  /* padding: var(--spacing-sm); */
+
+}
+
+.username-form input:focus {
+  transform: scale(1.05);
+}
+
+.username-input-wrapper {
+  text-align: center;
+}
+
+form button {
+  padding: var(--spacing-md);
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  background-color: var(--button-backgroud);
+  border: none;
+  color: var(--light);
+  transition: transform 0.2s ease-in-out;
+}
+
+form button:hover {
+  transform: scale(1.1);
+}
