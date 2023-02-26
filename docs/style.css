@@ -266,7 +266,7 @@ div.error-placing {
 .cell-relative:hover::before {
   content: "Row: " attr(data-row) " Column: " attr(data-column);
   position: absolute;
-  top: -20px;
+  bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;
@@ -275,4 +275,5 @@ div.error-placing {
   border-radius: 5px;
   font-size: 12px;
   white-space: nowrap;
+  z-index: 1;
 }
