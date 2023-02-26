@@ -33,13 +33,57 @@
 
     <div class="place-ships-modal">
       <div class="place-ships-modal-content">
+        <p>Place your Carrier: Length 5 boxes</p>
         <form class="place-ships-form" action="#">
-          <div class="username-input-wrapper">
-            <label for="name">Username</label>
-            <input type="text" name="name" id="name" spellcheck="false"/>
+          <div class="row-column-wrapper">
+            <div class="row-wrapper">
+              <label for="row">Row: </label>
+              <input
+                type="number"
+                name="row"
+                id="row"
+                min="0"
+                max="9"
+                required
+              />
+            </div>
+            <div class="column-wrapper">
+              <label for="column">Column: </label>
+              <input
+                type="number"
+                name="column"
+                id="column"
+                min="0"
+                max="9"
+                required
+              />
+            </div>
           </div>
-          <button type="submit">Start Game</button>
+          <div class="radio-buttons">
+            <div class="horizontal">
+              <label for="horizontal">Horizontal</label>
+              <input
+                type="radio"
+                name="direction"
+                id="horizontal"
+                value="horizontal"
+                checked
+              />
+            </div>
+            <div class="vertical">
+              <label for="vertical">Vertical</label>
+              <input
+                type="radio"
+                name="direction"
+                id="vertical"
+                value="vertical"
+              />
+            </div>
+          </div>
+          <button type="submit">Place Ship</button>
         </form>
+        <div class="error-placing">Cannot place ship there</div>
+        <div class="grid-select-ships"></div>
       </div>
     </div>
   </body>

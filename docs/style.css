@@ -163,15 +163,116 @@ form button:hover {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.5);
+  /* overflow: auto; */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .place-ships-modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: 1% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
   max-width: 600px;
+
+  display: grid;
+  grid-template-rows: 0.3fr 1fr 0.2fr 4fr;
+  border-radius: 55px;
+  gap: 5px;
+}
+
+.grid-select-ships {
+  display: grid;
+  grid-template-columns: repeat(10, 35px);
+  grid-template-rows: repeat(10, 35px);
+  align-self: center;
+  justify-self: center;
+  box-shadow: 0px 0px 5px 6px rgba(0, 0, 0, 0.05);
+  border: solid #273547e7 1px;
+}
+
+.grid-select-ships * {
+  border-top: solid #0065d83b 1px;
+  border-left: solid #0065d83b 1px;
+}
+
+.row-column-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.row-wrapper {
+  justify-self: end;
+}
+
+.place-ships-form {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.radio-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.horizontal {
+  justify-self: end;
+}
+
+form button {
+  justify-self: center;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  background-color: var(--button-backgroud);
+  border: none;
+  color: var(--light);
+  transition: transform 0.2s ease-in-out;
+}
+
+form button:hover {
+  transform: scale(1.1);
+}
+
+.place-ships-modal-content p {
+  justify-self: center;
+  font-size: 1.3rem;
+}
+
+div.error-placing {
+  color: red;
+  justify-self: center;
+  visibility: hidden;
+}
+
+.error-placing-visible {
+  visibility: visible;
+}
+
+.placed-ship {
+  color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell-relative {
+  position: relative;
+}
+
+.cell-relative:hover::before {
+  content: "Row: " attr(data-row) " Column: " attr(data-column);
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
 }
