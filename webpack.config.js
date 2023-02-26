@@ -19,13 +19,4 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    extensions: [".js"],
-  },
-  // ...
-  // Add the following line to tell webpack to use the .babelrc file
-  // for Babel configuration
-  babel: {
-    configFile: path.resolve(__dirname, ".babelrc"),
-  },
 };
