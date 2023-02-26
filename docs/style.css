@@ -156,15 +156,18 @@ form button:hover {
 } */
 
 .place-ships-modal {
-  display: block;
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  /* overflow: auto; */
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.place-ships-modal-visible {
+  display: block;
 }
 
 .place-ships-modal-content {
@@ -179,6 +182,21 @@ form button:hover {
   grid-template-rows: 0.3fr 1fr 0.2fr 4fr;
   border-radius: 55px;
   gap: 5px;
+
+  animation-name: modal-fall-in;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes modal-fall-in {
+  from {
+    margin-top: -800px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 0;
+    opacity: 1;
+  }
 }
 
 .grid-select-ships {
