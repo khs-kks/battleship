@@ -1,6 +1,7 @@
 :root {
   --light: #e5ebeb;
   --dark: #403e39;
+  --main-section-font-color: #273547e7;
   --modal-background: #0000001a;
   --button-backgroud: #1d75da;
   --border-radius: 5px;
@@ -23,23 +24,18 @@ body {
 }
 
 .body-wrapper {
-  border: 1px solid red;
   height: 100vh;
   width: 100vw;
   display: grid;
-  grid-template-rows: 1fr 8fr 1fr;
-}
-
-header,
-main,
-footer {
-  border: 1px solid blue;
+  grid-template-rows: 1fr 7fr;
 }
 
 header {
   display: grid;
   grid-template-columns: 8fr 1fr 1fr;
   color: var(--dark);
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
 }
 
 .logo {
@@ -238,7 +234,7 @@ div.error-placing {
 /* ########################## */
 
 .announcement-modal {
-  display: block;
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -302,4 +298,65 @@ div.error-placing {
 
 .announcement-modal-content button:hover {
   transform: scale(1.1);
+}
+
+/* ########################## */
+/* MAIN section */
+/* ########################## */
+
+.boards-wrapper {
+  margin: 0 auto;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 3fr;
+  justify-items: center;
+}
+
+.boards-wrapper h3 {
+  color: var(--main-section-font-color);
+  align-self: flex-end;
+}
+
+.yourboard-grid,
+.aiboard-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 31px);
+  grid-template-rows: repeat(10, 31px);
+  border: solid #273547e7 1px;
+}
+
+.yourboard-grid *,
+.aiboard-grid * {
+  border-top: solid #0065d83b 1px;
+  border-left: solid #0065d83b 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myships {
+  color: blue;
+}
+
+.hit {
+  background-color: rgba(255, 0, 0, 0.8);
+  font-weight: 600;
+  color: var(--light);
+}
+
+.miss {
+  position: relative;
+}
+
+.miss::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -4px;
+  border-radius: 50%;
+  background-color: #000000a9;
 }
