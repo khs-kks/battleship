@@ -360,3 +360,48 @@ div.error-placing {
   border-radius: 50%;
   background-color: #000000a9;
 }
+
+/* ########################## */
+/* HOW TO PLAY */
+/* ########################## */
+
+.how-to-play-wrapper {
+  width: 70%;
+  margin: 3% auto;
+  display: grid;
+  justify-items: center;
+  grid-template-rows: 1fr 6fr;
+  gap: var(--spacing-md);
+}
+
+.rules-tips-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.rules-tips-left,
+.rules-tips-right {
+  background-color: #ebebeb;
+  border-radius: 2rem;
+  box-shadow: rgb(0 0 0 / 16%) 0 5px 5px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+}
+
+.rules-tips-right span {
+  padding: 0 0.4rem;
+  border-radius: 1rem;
+  background-color: #0065d8;
+  box-shadow: rgb(0 0 0 / 16%) 0 2px 2px;
+  color: white;
+  font-weight: bold;
+}
+
+li {
+  line-height: 1.5;
+}
