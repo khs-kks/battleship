@@ -32,7 +32,7 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: 8fr 1fr 1fr;
+  grid-template-columns: 8fr 1fr 1fr 1fr;
   color: var(--dark);
   padding-left: var(--spacing-md);
   padding-right: var(--spacing-md);
@@ -51,7 +51,8 @@ a {
 }
 
 .home,
-.how-to {
+.how-to,
+.new-game {
   background-color: inherit;
   border: none;
   cursor: pointer;
@@ -60,13 +61,15 @@ a {
 }
 
 .home:hover,
-.how-to:hover {
+.how-to:hover,
+.new-game:hover {
   transform: scale(1.2);
 }
 
 .home::before,
 .how-to::before,
-a::before {
+a::before,
+.new-game::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -79,7 +82,8 @@ a::before {
 
 .home:hover::before,
 .how-to:hover::before,
-a:hover::before {
+a:hover::before,
+.new-game:hover::before {
   width: 100%;
 }
 
