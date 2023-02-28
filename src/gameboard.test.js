@@ -1,7 +1,6 @@
 import Gameboard from "./gameboard";
 import Ship from "./ship";
 
-//TODO allow placing ships vertically and horizontally
 test("placeShip method for horizontal placement", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5, "horizontal");

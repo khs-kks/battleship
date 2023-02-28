@@ -113,6 +113,21 @@ export default class Gameboard {
     this.ships.push(ship);
   }
 
+  placeShipAutomatically(length) {
+    const getRandomIndex = (max) => Math.floor(Math.random() * max);
+
+    const row = getRandomIndex(this.grid.length);
+    const column = getRandomIndex(this.grid.length);
+    const placement = Math.random() < 0.5 ? "horizontal" : "vertical";
+
+    try {
+      this.placeShip(length, row, column, placement);
+    } catch (e) {
+      // If the random placement is invalid, try again recursively
+      this.placeShipAutomatically(length);
+    }
+  }
+
   receiveAttack(row, column) {
     const [targetRow, targetColumn] = [row, column];
 
