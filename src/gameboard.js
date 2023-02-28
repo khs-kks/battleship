@@ -113,18 +113,28 @@ export default class Gameboard {
     this.ships.push(ship);
   }
 
-  placeShipAutomatically(length) {
+  placeShipAutomatically(length, maxRetries = 5000) {
     const getRandomIndex = (max) => Math.floor(Math.random() * max);
 
-    const row = getRandomIndex(this.grid.length);
-    const column = getRandomIndex(this.grid.length);
-    const placement = Math.random() < 0.5 ? "horizontal" : "vertical";
+    let retries = 0;
+    let placed = false;
 
-    try {
-      this.placeShip(length, row, column, placement);
-    } catch (e) {
-      // If the random placement is invalid, try again recursively
-      this.placeShipAutomatically(length);
+    while (!placed && retries < maxRetries) {
+      const row = getRandomIndex(this.grid.length);
+      const column = getRandomIndex(this.grid.length);
+      const placement = Math.random() < 0.5 ? "horizontal" : "vertical";
+
+      try {
+        this.placeShip(length, row, column, placement);
+        placed = true;
+      } catch (error) {
+        // Invalid placement, retry
+        retries += 1;
+      }
+    }
+
+    if (!placed) {
+      throw new Error("Could not place ship after maximum retries");
     }
   }
 

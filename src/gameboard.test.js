@@ -22,7 +22,6 @@ test("placeShip method for vertical placement", () => {
 
   expect(player1.grid).not.toContainEqual([0, 0, null]);
   expect(player1.grid).not.toContainEqual([4, 0, null]);
-
 });
 
 test("Place ship on already existing ship", () => {
@@ -37,6 +36,34 @@ test("placeShip out of grid", () => {
   expect(() => player1.placeShip(3, 5, 8)).toThrow(Error);
 });
 
+describe("Gameboard", () => {
+  describe("placeShipAutomatically", () => {
+    test("should place a ship of length 3", () => {
+      const obj = new Gameboard();
+      obj.placeShipAutomatically(3);
+
+      // Assert that the ship was placed correctly
+      expect(obj.ships.length).toBe(1);
+      expect(obj.ships[0].length).toBe(3);
+    });
+
+    test("should handle invalid placements gracefully", () => {
+      const obj = new Gameboard();
+
+      // Mock the placeShip method to always throw an error
+      obj.placeShip = jest.fn().mockImplementation(() => {
+        throw new Error("Invalid placement");
+      });
+
+      // Call placeShipAutomatically with a length of 2 and a maximum of 3 retries
+      expect(() => obj.placeShipAutomatically(2, 3)).toThrowError(
+        "Could not place ship after maximum retries"
+      );
+      expect(obj.placeShip).toHaveBeenCalledTimes(3);
+    });
+  });
+});
+
 test("receiveAttack method", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5);
@@ -46,8 +73,8 @@ test("receiveAttack method", () => {
   expect(player1.receiveAttack(2, 7)).toBeFalsy();
   expect(() => player1.receiveAttack(-1, 9)).toThrow(Error);
   expect(() => player1.receiveAttack(2, 7)).toThrow(Error);
-  expect(player1.receiveAttack(0,0)).toBeTruthy();
-  expect(player1.receiveAttack(4,0)).toBeTruthy();
+  expect(player1.receiveAttack(0, 0)).toBeTruthy();
+  expect(player1.receiveAttack(4, 0)).toBeTruthy();
 });
 
 test("Check if Gameboard object is reporting wether or not all ships have been sunk", () => {
