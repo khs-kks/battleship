@@ -23,7 +23,6 @@
           rel="noopener noreferrer"
           >BATTLESHIPS</a
         >
-        <button class="home">Home</button>
         <button class="new-game">New game</button>
         <button class="how-to">How to play</button>
       </header>
@@ -33,51 +32,6 @@
           <h3 class="aiboard">AI's board</h3>
           <div class="yourboard-grid"></div>
           <div class="aiboard-grid"></div>
-        </div>
-        <div class="how-to-play-wrapper">
-          <h2 class="title-how-to-play">How to play Battleships</h2>
-          <div class="rules-tips-wrapper">
-            <div class="rules-tips-left">
-              <h2>Rules</h2>
-              <p>
-                The objective of Battleships is to try and sink all of the
-                opponent's ships before they sink all of yours. Players take
-                turns firing shots to attempt to hit the enemy ships.
-              </p>
-              <p>
-                Both players can not see the fleet of the other, you have to
-                guess where is the ideal position to shoot at!
-              </p>
-              <p>
-                First player to sink all the opponent's ships wins the game!
-              </p>
-            </div>
-            <div class="rules-tips-right">
-              <h2>Controls</h2>
-              <p>
-                Before starting, you need to place all your ships on the board.
-                To do that, you can:
-              </p>
-              <ul>
-                <li>
-                  Choose the starting coordinates (<span>row</span> and
-                  <span>column</span> ) for each of your ships
-                </li>
-                <li>
-                  Choose if you want <span>vertical</span> or
-                  <span>horizontal</span> placement
-                </li>
-                <li>
-                  You can <span>hover</span> over the grid to check for exact
-                  coordinates
-                </li>
-              </ul>
-              <p>
-                Once that is done, press <span>start</span> and try to defeat the
-                AI!
-              </p>
-            </div>
-          </div>
         </div>
       </main>
       <!-- <footer></footer> -->
@@ -147,6 +101,55 @@
       <div class="announcement-modal-content">
         <p>You won the game!</p>
         <button>Restart</button>
+      </div>
+    </div>
+
+    <!-- HOW-TO-PLAY MODAL -->
+
+    <div class="how-to-play-modal">
+      <div class="how-to-play-wrapper">
+        <h2 class="title-how-to-play">How to play Battleships</h2>
+        <span class="close-button">X</span>
+        <div class="rules-tips-wrapper">
+          <div class="rules-tips-left">
+            <h2>Rules</h2>
+            <p>
+              The objective of Battleships is to try and sink all of the
+              opponent's ships before they sink all of yours. Players take turns
+              firing shots to attempt to hit the enemy ships.
+            </p>
+            <p>
+              Both players can not see the fleet of the other, you have to guess
+              where is the ideal position to shoot at!
+            </p>
+            <p>First player to sink all the opponent's ships wins the game!</p>
+          </div>
+          <div class="rules-tips-right">
+            <h2>Controls</h2>
+            <p>
+              Before starting, you need to place all your ships on the board. To
+              do that, you can:
+            </p>
+            <ul>
+              <li>
+                Choose the starting coordinates (<span>row</span> and
+                <span>column</span> ) for each of your ships
+              </li>
+              <li>
+                Choose if you want <span>vertical</span> or
+                <span>horizontal</span> placement
+              </li>
+              <li>
+                You can <span>hover</span> over the grid to check for exact
+                coordinates
+              </li>
+            </ul>
+            <p>
+              Once that is done, press <span>start</span> and try to defeat the
+              AI!
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </body>

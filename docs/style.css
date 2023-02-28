@@ -32,7 +32,7 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: 8fr 1fr 1fr 1fr;
+  grid-template-columns: 8fr 1fr 1fr;
   color: var(--dark);
   padding-left: var(--spacing-md);
   padding-right: var(--spacing-md);
@@ -50,7 +50,6 @@ a {
   position: relative;
 }
 
-.home,
 .how-to,
 .new-game {
   background-color: inherit;
@@ -60,13 +59,11 @@ a {
   transition: transform 0.5s ease-in-out;
 }
 
-.home:hover,
 .how-to:hover,
 .new-game:hover {
   transform: scale(1.2);
 }
 
-.home::before,
 .how-to::before,
 a::before,
 .new-game::before {
@@ -80,7 +77,6 @@ a::before,
   transition: width 0.5s ease-in-out;
 }
 
-.home:hover::before,
 .how-to:hover::before,
 a:hover::before,
 .new-game:hover::before {
@@ -369,6 +365,22 @@ div.error-placing {
 /* HOW TO PLAY */
 /* ########################## */
 
+.how-to-play-modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0000001a;
+  backdrop-filter: blur(3px);
+}
+
+.how-to-play-modal-visible {
+  display: block;
+}
+
 .how-to-play-wrapper {
   width: 70%;
   margin: 3% auto;
@@ -376,6 +388,7 @@ div.error-placing {
   justify-items: center;
   grid-template-rows: 1fr 6fr;
   gap: var(--spacing-md);
+  position: relative;
 }
 
 .rules-tips-wrapper {
@@ -408,4 +421,23 @@ div.error-placing {
 
 li {
   line-height: 1.5;
+}
+
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #0065d8;
+  color: white;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #aaa;
 }
