@@ -1,9 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-// Carrier 	5
-// Battleship 	4
-// Destroyer 	3
-// Submarine 	3
-// Patrol Boat 	2
+
 export default class Ship {
   constructor(length) {
     this.length = length;

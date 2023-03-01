@@ -193,7 +193,7 @@ form button:hover {
   font-size: 1.3rem;
 }
 
-div.error-placing {
+.error-placing {
   color: red;
   justify-self: center;
   visibility: hidden;
@@ -389,6 +389,21 @@ div.error-placing {
   grid-template-rows: 1fr 6fr;
   gap: var(--spacing-md);
   position: relative;
+
+  animation-name: how-to-play-fall-in;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes how-to-play-fall-in {
+  from {
+    margin-top: -800px;
+    opacity: 0;
+  }
+  to {
+    margin-top: 3%;
+    opacity: 1;
+  }
 }
 
 .rules-tips-wrapper {
