@@ -16,13 +16,22 @@ export default class UI {
   static verticalRadio = document.querySelector("#vertical");
   static placeShipOrStartGameBtn = document.querySelector(".place-ship-button");
   static errorPlacingShip = document.querySelector(".error-placing");
-  static placedShipsCounter = 0;
-  static shipsToPlace = [
-    ["Carrier", 5],
-    ["Battleship", 4],
-    ["Cruiser", 3],
-    ["Submarine", 3],
-    ["Destroyer", 2],
+  // static placedShipsCounter = 0;
+  // static shipsToPlace = [
+  //   ["Carrier", 5],
+  //   ["Battleship", 4],
+  //   ["Cruiser", 3],
+  //   ["Submarine", 3],
+  //   ["Destroyer", 2],
+  // ];
+
+  static #placedShipsCounter = 0;
+  static #shipsToPlace = [
+    { name: "Carrier", length: 5 },
+    { name: "Battleship", length: 4 },
+    { name: "Cruiser", length: 3 },
+    { name: "Submarine", length: 3 },
+    { name: "Destroyer", length: 2 },
   ];
 
   // WINNER ANNOUNCEMENT MODAL
@@ -63,38 +72,98 @@ export default class UI {
     }
   }
 
+  // static renderAddShipGameboard() {
+  //   UI.selectShipsGrid.innerHTML = "";
+  //   UI.renderShipNameToPlace();
+
+  //   for (let i = 0; i < 10; i += 1) {
+  //     for (let j = 0; j < 10; j += 1) {
+  //       const singleCell = document.createElement("div");
+  //       singleCell.dataset.row = i.toString();
+  //       singleCell.dataset.column = j.toString();
+
+  //       singleCell.classList.add("cell-relative");
+  //       UI.selectShipsGrid.appendChild(singleCell);
+
+  //       const gridElement = Gameloop.player.gameboard.grid.find(
+  //         (el) => el[0] === i && el[1] === j
+  //       );
+  //       if (gridElement && gridElement[2]) {
+  //         singleCell.textContent = "X";
+  //         singleCell.classList.add("placed-ship");
+  //       }
+  //     }
+  //   }
+  // }
+
   static renderAddShipGameboard() {
     UI.selectShipsGrid.innerHTML = "";
     UI.renderShipNameToPlace();
 
-    for (let i = 0; i < 10; i += 1) {
-      for (let j = 0; j < 10; j += 1) {
-        const singleCell = document.createElement("div");
-        singleCell.dataset.row = i.toString();
-        singleCell.dataset.column = j.toString();
+    for (let row = 0; row < 10; row += 1) {
+      for (let column = 0; column < 10; column += 1) {
+        const gameboardCell = document.createElement("div");
+        gameboardCell.dataset.row = row.toString();
+        gameboardCell.dataset.column = column.toString();
+        gameboardCell.classList.add("cell-relative");
+        UI.selectShipsGrid.appendChild(gameboardCell);
 
-        singleCell.classList.add("cell-relative");
-        UI.selectShipsGrid.appendChild(singleCell);
-
-        const gridElement = Gameloop.player.gameboard.grid.find(
-          (el) => el[0] === i && el[1] === j
+        const isShipPlaced = Gameloop.player.gameboard.grid.some(
+          (cell) => cell[0] === row && cell[1] === column && cell[2]
         );
-        if (gridElement && gridElement[2]) {
-          singleCell.textContent = "X";
-          singleCell.classList.add("placed-ship");
+        if (isShipPlaced) {
+          gameboardCell.textContent = "X";
+          gameboardCell.classList.add("placed-ship");
         }
       }
     }
   }
 
+  // static renderShipNameToPlace() {
+  //   if (UI.placedShipsCounter < 5) {
+  //     const shipName = UI.shipsToPlace[UI.placedShipsCounter][0];
+  //     const shipLength = UI.shipsToPlace[UI.placedShipsCounter][1];
+  //     UI.shipInfoPara.textContent = `Place your ${shipName}, length ${shipLength}`;
+  //   } else {
+  // Change button to start game ane actually start it
+  //     console.log("OPS");
+  //   }
+  // }
+
   static renderShipNameToPlace() {
-    if (UI.placedShipsCounter < 5) {
-      const shipName = UI.shipsToPlace[UI.placedShipsCounter][0];
-      const shipLength = UI.shipsToPlace[UI.placedShipsCounter][1];
-      UI.shipInfoPara.textContent = `Place your ${shipName}, length ${shipLength}`;
-    } else {
-      //Change button to start game ane actually start it
-      console.log("OPS");
+    if (UI.#placedShipsCounter < UI.#shipsToPlace.length) {
+      const { name, length } = UI.#shipsToPlace[UI.#placedShipsCounter];
+      UI.shipInfoPara.textContent = `Place your ${name}, length ${length}`;
+    }
+  }
+
+  static handlePlaceShipOrStartGameClick() {
+    const shipLength = UI.#shipsToPlace[UI.#placedShipsCounter].length;
+    const row = +UI.inputRow.value;
+    const column = +UI.inputColumn.value;
+    const orientation = UI.horizontalRadio.checked ? "horizontal" : "vertical";
+
+    if (!UI.inputRow.checkValidity() || !UI.inputColumn.checkValidity()) {
+      UI.errorPlacingShip.textContent = "Invalid Input";
+      UI.errorPlacingShip.classList.add("error-placing-visible");
+      return;
+    }
+
+    try {
+      Gameloop.player.gameboard.placeShip(shipLength, row, column, orientation);
+      UI.#placedShipsCounter += 1;
+      UI.renderAddShipGameboard();
+      UI.renderShipNameToPlace();
+      UI.errorPlacingShip.classList.remove("error-placing-visible");
+    } catch (error) {
+      UI.errorPlacingShip.textContent = error;
+      UI.errorPlacingShip.classList.add("error-placing-visible");
+    }
+
+    if (UI.#placedShipsCounter === UI.#shipsToPlace.length) {
+      UI.placeShipOrStartGameBtn.textContent = "Start game";
+      UI.shipInfoPara.textContent = "All ships set! Ready to roll!";
+      // Change button to start game and actually start it
     }
   }
 
@@ -113,40 +182,46 @@ export default class UI {
       UI.howToPlayModal.classList.remove("how-to-play-modal-visible");
     });
 
+    // UI.placeShipOrStartGameBtn.addEventListener("click", (e) => {
+    //   e.preventDefault();
+
+    //   UI.renderShipNameToPlace();
+
+    //   let placement = null;
+    //   if (UI.horizontalRadio.checked) {
+    //     placement = "horizontal";
+    //   } else {
+    //     placement = "vertical";
+    //   }
+
+    //   if (UI.inputRow.checkValidity() && UI.inputColumn.checkValidity()) {
+    //     try {
+    //       const shipLength = UI.shipsToPlace[UI.placedShipsCounter][1];
+    //       Gameloop.player.gameboard.placeShip(
+    //         shipLength,
+    //         +UI.inputRow.value,
+    //         +UI.inputColumn.value,
+    //         placement
+    //       );
+
+    //       UI.renderAddShipGameboard();
+
+    //       UI.placedShipsCounter += 1;
+    //       UI.renderShipNameToPlace();
+    //     } catch (error) {
+    //       UI.errorPlacingShip.textContent = error;
+    //       UI.errorPlacingShip.classList.add("error-placing-visible");
+    //     }
+    //   } else {
+    //     console.log("Kurec x 2");
+    //   }
+    // });
     UI.placeShipOrStartGameBtn.addEventListener("click", (e) => {
       e.preventDefault();
-
-      UI.renderShipNameToPlace();
-
-      let placement = null;
-      if (UI.horizontalRadio.checked) {
-        placement = "horizontal";
+      if (this.placeShipOrStartGameBtn.textContent === "Start game") {
+        console.log("OK! Ready to start!");
       } else {
-        placement = "vertical";
-      }
-
-      if (UI.inputRow.checkValidity() && UI.inputColumn.checkValidity()) {
-        try {
-          const shipLength = UI.shipsToPlace[UI.placedShipsCounter][1];
-          Gameloop.player.gameboard.placeShip(
-            shipLength,
-            +UI.inputRow.value,
-            +UI.inputColumn.value,
-            placement
-          );
-
-          UI.renderAddShipGameboard();
-          
-
-          UI.placedShipsCounter += 1;
-          UI.renderShipNameToPlace();
-          
-        } catch (error) {
-          UI.errorPlacingShip.textContent = error;
-          UI.errorPlacingShip.classList.add("error-placing-visible");
-        }
-      } else {
-        console.log("Kurec x 2");
+        UI.handlePlaceShipOrStartGameClick();
       }
     });
   }
