@@ -149,6 +149,78 @@ export default class UI {
   }
 
   // ##########################
+  // MAIN GAME AND BOARDS
+  // ##########################
+
+  static renderPlayerBoard() {
+    UI.yourBoardGrid.innerHTML = "";
+    for (let row = 0; row < 10; row += 1) {
+      for (let column = 0; column < 10; column += 1) {
+        const gameboardCell = document.createElement("div");
+        gameboardCell.dataset.row = row.toString();
+        gameboardCell.dataset.column = column.toString();
+        // gameboardCell.classList.add("cell-relative");
+        UI.yourBoardGrid.appendChild(gameboardCell);
+
+        const isShipPlaced = Gameloop.player.gameboard.grid.some(
+          (cell) => cell[0] === row && cell[1] === column && cell[2]
+        );
+        if (isShipPlaced) {
+          gameboardCell.textContent = "X";
+          gameboardCell.classList.add("myships");
+        }
+
+        for (let i = 0; i < Gameloop.player.gameboard.attacks.length; i += 1) {
+          if (
+            Gameloop.player.gameboard.attacks[i][0] === row &&
+            Gameloop.player.gameboard.attacks[i][1] === column
+          ) {
+            if (Gameloop.player.gameboard.attacks[i][2] === "+") {
+              gameboardCell.classList.add("hit");
+            } else if (Gameloop.player.gameboard.attacks[i][2] === "-") {
+              gameboardCell.classList.add("miss");
+            }
+          }
+        }
+      }
+    }
+  }
+
+  static renderComputerBoard() {
+    UI.aiBoardGrid.innerHTML = "";
+    for (let row = 0; row < 10; row += 1) {
+      for (let column = 0; column < 10; column += 1) {
+        const gameboardCell = document.createElement("div");
+        gameboardCell.dataset.row = row.toString();
+        gameboardCell.dataset.column = column.toString();
+        // gameboardCell.classList.add("cell-relative");
+        UI.aiBoardGrid.appendChild(gameboardCell);
+
+        const isShipPlaced = Gameloop.computer.gameboard.grid.some(
+          (cell) => cell[0] === row && cell[1] === column && cell[2]
+        );
+        if (isShipPlaced) {
+          gameboardCell.textContent = "X";
+          // gameboardCell.classList.add("myships");
+        }
+
+        for (let i = 0; i < Gameloop.computer.gameboard.attacks.length; i += 1) {
+          if (
+            Gameloop.computer.gameboard.attacks[i][0] === row &&
+            Gameloop.computer.gameboard.attacks[i][1] === column
+          ) {
+            if (Gameloop.computer.gameboard.attacks[i][2] === "+") {
+              gameboardCell.classList.add("hit");
+            } else if (Gameloop.computer.gameboard.attacks[i][2] === "-") {
+              gameboardCell.classList.add("miss");
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ##########################
   // ADD EVENT LISTENERS
   // ##########################
 
@@ -189,9 +261,12 @@ export default class UI {
         Gameloop.computer.gameboard.placeShipAutomatically(3);
         Gameloop.computer.gameboard.placeShipAutomatically(2);
 
+        UI.renderPlayerBoard();
+        UI.renderComputerBoard();
+
         // DONE: set modal to display: none
         // DONE: generate the AI ships
-        // render the player's ships on main page
+        // DONE: render the player's ships on main page
       } else {
         UI.handlePlaceShipOrStartGameClick();
       }
