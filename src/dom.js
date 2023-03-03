@@ -1,4 +1,5 @@
 import Gameloop from "./gameloop";
+import Player from "./player";
 
 export default class UI {
   static newGameBtn = document.querySelector("button.new-game");
@@ -153,8 +154,20 @@ export default class UI {
 
   static eventListeners() {
     UI.newGameBtn.addEventListener("click", () => {
-      UI.placeShipsModal.classList.add("place-ships-modal-visible");
+      Gameloop.player = null;
+      Gameloop.computer = null;
+
+      Gameloop.player = new Player("Kris");
+      Gameloop.computer = new Player();
+
+      UI.#placedShipsCounter = 0;
+      UI.renderAddShipGameboard();
       UI.renderShipNameToPlace();
+      UI.inputRow.value = "";
+      UI.inputColumn.value = "";
+      UI.placeShipOrStartGameBtn.textContent = "Place ship";
+
+      UI.placeShipsModal.classList.add("place-ships-modal-visible");
     });
 
     UI.howToBtn.addEventListener("click", () => {
@@ -167,8 +180,18 @@ export default class UI {
 
     UI.placeShipOrStartGameBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      if (this.placeShipOrStartGameBtn.textContent === "Start game") {
+      if (UI.placeShipOrStartGameBtn.textContent === "Start game") {
         console.log("OK! Ready to start!");
+        UI.placeShipsModal.classList.remove("place-ships-modal-visible");
+        Gameloop.computer.gameboard.placeShipAutomatically(5);
+        Gameloop.computer.gameboard.placeShipAutomatically(4);
+        Gameloop.computer.gameboard.placeShipAutomatically(3);
+        Gameloop.computer.gameboard.placeShipAutomatically(3);
+        Gameloop.computer.gameboard.placeShipAutomatically(2);
+
+        // DONE: set modal to display: none
+        // DONE: generate the AI ships
+        // render the player's ships on main page
       } else {
         UI.handlePlaceShipOrStartGameClick();
       }
