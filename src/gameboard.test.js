@@ -1,6 +1,32 @@
 import Gameboard from "./gameboard";
 import Ship from "./ship";
 
+test("placeShip places ship of length 3 horizontally at (2, 3)", () => {
+  const gameboard = new Gameboard();
+  gameboard.placeShip(3, 2, 3, "horizontal");
+
+  // Check that the ship was placed in the correct cells
+  expect(gameboard.grid[23]).toEqual([2, 3, gameboard.ships[0]]);
+  expect(gameboard.grid[24]).toEqual([2, 4, gameboard.ships[0]]);
+  expect(gameboard.grid[25]).toEqual([2, 5, gameboard.ships[0]]);
+  
+
+  // Check that the correct number of cells are occupied by the ship
+  expect(gameboard.ships[0].length).toEqual(3);
+
+  // Check that the correct number of ships are in the Gameboard object
+  expect(gameboard.ships.length).toEqual(1);
+
+  // Check that no other cells were modified
+  for (let i = 0; i < gameboard.grid.length; i += 1) {
+    if (i === 23 || i === 24 || i === 25) {
+      continue;
+    }
+    expect(gameboard.grid[i]).toEqual([Math.floor(i / 10), i % 10, null]);
+  }
+});
+
+
 test("placeShip method for horizontal placement", () => {
   const player1 = new Gameboard();
   player1.placeShip(3, 3, 5, "horizontal");
