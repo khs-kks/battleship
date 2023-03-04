@@ -196,13 +196,13 @@ export default class UI {
         // gameboardCell.classList.add("cell-relative");
         UI.aiBoardGrid.appendChild(gameboardCell);
 
-        const isShipPlaced = Gameloop.computer.gameboard.grid.some(
-          (cell) => cell[0] === row && cell[1] === column && cell[2]
-        );
-        if (isShipPlaced) {
-          gameboardCell.textContent = "X";
-          // gameboardCell.classList.add("myships");
-        }
+        // const isShipPlaced = Gameloop.computer.gameboard.grid.some(
+        //   (cell) => cell[0] === row && cell[1] === column && cell[2]
+        // );
+        // if (isShipPlaced) {
+        //   gameboardCell.textContent = "X";
+        //   // gameboardCell.classList.add("myships");
+        // }
 
         for (let i = 0; i < Gameloop.computer.gameboard.attacks.length; i += 1) {
           if (
@@ -211,6 +211,7 @@ export default class UI {
           ) {
             if (Gameloop.computer.gameboard.attacks[i][2] === "+") {
               gameboardCell.classList.add("hit");
+              gameboardCell.textContent = "X";
             } else if (Gameloop.computer.gameboard.attacks[i][2] === "-") {
               gameboardCell.classList.add("miss");
             }
