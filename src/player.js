@@ -26,19 +26,18 @@ export default class Player {
   }
 
   automaticAttack(opponent) {
-    let attackSuccessful = false;
-
-    do {
+    const attacksInitialLength = opponent.gameboard.attacks.length;
+   
+    while (attacksInitialLength === opponent.gameboard.attacks.length) {
       const row = Math.floor(Math.random() * 10);
       const column = Math.floor(Math.random() * 10);
 
       try {
-        attackSuccessful = opponent.gameboard.receiveAttack(row, column);
+        opponent.gameboard.receiveAttack(row, column);
       } catch {
         continue;
       }
-    } while (!attackSuccessful);
-
+    }
     Player.turns.push(this.name);
   }
 }

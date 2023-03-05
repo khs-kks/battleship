@@ -91,21 +91,12 @@ export default class Gameboard {
       const column = getRandomIndex(10);
       const placement = Math.random() < 0.5 ? "horizontal" : "vertical";
 
-      console.log("------------------");
-      console.log(`Row generated: ${row}`);
-      console.log(`Column generated: ${column}`);
-      console.log(`Placement generated: ${placement}`);
-      console.log(`Length: ${length}`);
-
       try {
         this.placeShip(length, row, column, placement);
-        console.log("Success!!");
         placed = true;
       } catch (error) {
         // Invalid placement, retry
-        console.log(`Error msg: ${error}`);
         retries += 1;
-        console.log(`Retrying... ${retries}`);
       }
     }
 

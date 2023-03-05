@@ -335,6 +335,10 @@ form button:hover {
   align-items: center;
 }
 
+.aiboard-grid * {
+  cursor: crosshair;
+}
+
 .myships {
   color: blue;
 }
@@ -359,6 +363,11 @@ form button:hover {
   margin: -4px;
   border-radius: 50%;
   background-color: #000000a9;
+}
+
+.already-clicked {
+  /* pointer-events: none; */
+  cursor: not-allowed;
 }
 
 /* ########################## */

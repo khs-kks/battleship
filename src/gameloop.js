@@ -9,8 +9,18 @@ export default class Gameloop {
 
   static computer = new Player();
 
+  static winner = null;
+
   static init() {
-    UI.drawGameboards();
+    // UI.drawGameboards();
     UI.eventListeners();
+  }
+
+  static checkWinner() {
+    if (Gameloop.player.gameboard.areAllShipsSunk()) {
+      Gameloop.winner = Gameloop.computer;
+    } else if (Gameloop.computer.gameboard.areAllShipsSunk()) {
+      Gameloop.winner = Gameloop.player;
+    }
   }
 }

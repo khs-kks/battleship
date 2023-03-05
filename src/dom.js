@@ -62,32 +62,32 @@ export default class UI {
   // DRAW THE GAMEBOARDS
   // ##########################
 
-  static drawGameboards() {
-    UI.selectShipsGrid.innerHTML = "";
-    for (let i = 0; i < 10; i += 1) {
-      for (let j = 0; j < 10; j += 1) {
-        const singleCell = document.createElement("div");
-        singleCell.dataset.row = i.toString();
-        singleCell.dataset.column = j.toString();
-        singleCell.classList.add("cell-relative");
+  // static drawGameboards() {
+  //   UI.selectShipsGrid.innerHTML = "";
+  //   for (let i = 0; i < 10; i += 1) {
+  //     for (let j = 0; j < 10; j += 1) {
+  //       const singleCell = document.createElement("div");
+  //       singleCell.dataset.row = i.toString();
+  //       singleCell.dataset.column = j.toString();
+  //       singleCell.classList.add("cell-relative");
 
-        UI.selectShipsGrid.appendChild(singleCell);
-      }
-    }
+  //       UI.selectShipsGrid.appendChild(singleCell);
+  //     }
+  //   }
 
-    for (let i = 0; i < 10; i += 1) {
-      for (let j = 0; j < 10; j += 1) {
-        const singleCell = document.createElement("div");
-        singleCell.dataset.row = i.toString();
-        singleCell.dataset.column = j.toString();
-        singleCell.classList.add("myships");
-        // singleCell.textContent = "X";
-        const singleCell2 = singleCell.cloneNode(true);
-        UI.aiBoardGrid.appendChild(singleCell);
-        UI.yourBoardGrid.appendChild(singleCell2);
-      }
-    }
-  }
+  //   for (let i = 0; i < 10; i += 1) {
+  //     for (let j = 0; j < 10; j += 1) {
+  //       const singleCell = document.createElement("div");
+  //       singleCell.dataset.row = i.toString();
+  //       singleCell.dataset.column = j.toString();
+  //       singleCell.classList.add("myships");
+  //       // singleCell.textContent = "X";
+  //       const singleCell2 = singleCell.cloneNode(true);
+  //       UI.aiBoardGrid.appendChild(singleCell);
+  //       UI.yourBoardGrid.appendChild(singleCell2);
+  //     }
+  //   }
+  // }
 
   static renderAddShipGameboard() {
     UI.selectShipsGrid.innerHTML = "";
@@ -204,7 +204,11 @@ export default class UI {
         //   // gameboardCell.classList.add("myships");
         // }
 
-        for (let i = 0; i < Gameloop.computer.gameboard.attacks.length; i += 1) {
+        for (
+          let i = 0;
+          i < Gameloop.computer.gameboard.attacks.length;
+          i += 1
+        ) {
           if (
             Gameloop.computer.gameboard.attacks[i][0] === row &&
             Gameloop.computer.gameboard.attacks[i][1] === column
@@ -212,8 +216,10 @@ export default class UI {
             if (Gameloop.computer.gameboard.attacks[i][2] === "+") {
               gameboardCell.classList.add("hit");
               gameboardCell.textContent = "X";
+              gameboardCell.classList.add("already-clicked");
             } else if (Gameloop.computer.gameboard.attacks[i][2] === "-") {
               gameboardCell.classList.add("miss");
+              gameboardCell.classList.add("already-clicked");
             }
           }
         }
@@ -254,7 +260,6 @@ export default class UI {
     UI.placeShipOrStartGameBtn.addEventListener("click", (e) => {
       e.preventDefault();
       if (UI.placeShipOrStartGameBtn.textContent === "Start game") {
-        console.log("OK! Ready to start!");
         UI.placeShipsModal.classList.remove("place-ships-modal-visible");
         Gameloop.computer.gameboard.placeShipAutomatically(5);
         Gameloop.computer.gameboard.placeShipAutomatically(4);
@@ -264,13 +269,50 @@ export default class UI {
 
         UI.renderPlayerBoard();
         UI.renderComputerBoard();
-
-        // DONE: set modal to display: none
-        // DONE: generate the AI ships
-        // DONE: render the player's ships on main page
+        UI.gameStarted();
       } else {
         UI.handlePlaceShipOrStartGameClick();
       }
     });
+  }
+
+  // ##########################
+  // MAIN GAME LOGIC
+  // ##########################
+
+  static gameStarted() {
+
+    Gameloop.checkWinner();
+
+    if (!Gameloop.winner) {
+      UI.renderPlayerBoard();
+      UI.renderComputerBoard();
+
+      let aiBoard = [...document.querySelectorAll(".aiboard-grid div")];
+      let playerBoard = [...document.querySelectorAll(".yourboard-grid div")];
+
+      for (let i = 0; i < aiBoard.length; i += 1) {
+        if (aiBoard[i].classList.length === 0) {
+          // Get the value of the data-row attribute as a number
+          let row = Number(aiBoard[i].dataset.row);
+
+          // Get the value of the data-column attribute as a number
+          let column = Number(aiBoard[i].dataset.column);
+
+          aiBoard[i].addEventListener("click", () => {
+            Gameloop.player.manualAttack(Gameloop.computer, row, column);
+            Gameloop.computer.automaticAttack(Gameloop.player);
+
+            UI.renderComputerBoard();
+            UI.renderPlayerBoard();
+
+            UI.gameStarted();
+            //TODO keep the game until there is a winner somehow
+          });
+        }
+      }
+    } else {
+      //Show the winner modal
+    }
   }
 }
