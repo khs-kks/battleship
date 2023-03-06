@@ -46,7 +46,13 @@ export default class UI {
   // WINNER ANNOUNCEMENT MODAL
   // ##########################
 
-  static restartGameBtn = document.querySelector("button.restart-game");
+  static announcementModal = document.querySelector(".announcement-modal");
+
+  static closeAnnouncementModal = document.querySelector("button.restart-game");
+
+  static displayWinner = document.querySelector(
+    ".announcement-modal-content p"
+  );
 
   // ##########################
   // GAMEBOARDS
@@ -235,6 +241,7 @@ export default class UI {
     UI.newGameBtn.addEventListener("click", () => {
       Gameloop.player = null;
       Gameloop.computer = null;
+      Gameloop.winner = null;
 
       Gameloop.player = new Player("Kris");
       Gameloop.computer = new Player();
@@ -281,23 +288,22 @@ export default class UI {
   // ##########################
 
   static gameStarted() {
-
     Gameloop.checkWinner();
 
     if (!Gameloop.winner) {
       UI.renderPlayerBoard();
       UI.renderComputerBoard();
 
-      let aiBoard = [...document.querySelectorAll(".aiboard-grid div")];
-      let playerBoard = [...document.querySelectorAll(".yourboard-grid div")];
+      const aiBoard = [...document.querySelectorAll(".aiboard-grid div")];
+      const playerBoard = [...document.querySelectorAll(".yourboard-grid div")];
 
       for (let i = 0; i < aiBoard.length; i += 1) {
         if (aiBoard[i].classList.length === 0) {
           // Get the value of the data-row attribute as a number
-          let row = Number(aiBoard[i].dataset.row);
+          const row = Number(aiBoard[i].dataset.row);
 
           // Get the value of the data-column attribute as a number
-          let column = Number(aiBoard[i].dataset.column);
+          const column = Number(aiBoard[i].dataset.column);
 
           aiBoard[i].addEventListener("click", () => {
             Gameloop.player.manualAttack(Gameloop.computer, row, column);
@@ -307,12 +313,20 @@ export default class UI {
             UI.renderPlayerBoard();
 
             UI.gameStarted();
-            //TODO keep the game until there is a winner somehow
           });
         }
       }
     } else {
-      //Show the winner modal
+      UI.announcementModal.classList.add("announcement-modal-visible");
+      if (Gameloop.winner.name === "Kris") {
+        UI.displayWinner.textContent = "You won the battle!";
+      } else {
+        UI.displayWinner.textContent = "You lost the battle!";
+      }
+
+      UI.closeAnnouncementModal.addEventListener("click", () => {
+        UI.announcementModal.classList.remove("announcement-modal-visible");
+      });
     }
   }
 }
