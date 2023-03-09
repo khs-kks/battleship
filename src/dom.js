@@ -68,33 +68,6 @@ export default class UI {
   // DRAW THE GAMEBOARDS
   // ##########################
 
-  // static drawGameboards() {
-  //   UI.selectShipsGrid.innerHTML = "";
-  //   for (let i = 0; i < 10; i += 1) {
-  //     for (let j = 0; j < 10; j += 1) {
-  //       const singleCell = document.createElement("div");
-  //       singleCell.dataset.row = i.toString();
-  //       singleCell.dataset.column = j.toString();
-  //       singleCell.classList.add("cell-relative");
-
-  //       UI.selectShipsGrid.appendChild(singleCell);
-  //     }
-  //   }
-
-  //   for (let i = 0; i < 10; i += 1) {
-  //     for (let j = 0; j < 10; j += 1) {
-  //       const singleCell = document.createElement("div");
-  //       singleCell.dataset.row = i.toString();
-  //       singleCell.dataset.column = j.toString();
-  //       singleCell.classList.add("myships");
-  //       // singleCell.textContent = "X";
-  //       const singleCell2 = singleCell.cloneNode(true);
-  //       UI.aiBoardGrid.appendChild(singleCell);
-  //       UI.yourBoardGrid.appendChild(singleCell2);
-  //     }
-  //   }
-  // }
-
   static renderAddShipGameboard() {
     UI.selectShipsGrid.innerHTML = "";
     UI.renderShipNameToPlace();
@@ -165,7 +138,7 @@ export default class UI {
         const gameboardCell = document.createElement("div");
         gameboardCell.dataset.row = row.toString();
         gameboardCell.dataset.column = column.toString();
-        // gameboardCell.classList.add("cell-relative");
+        
         UI.yourBoardGrid.appendChild(gameboardCell);
 
         const isShipPlaced = Gameloop.player.gameboard.grid.some(
@@ -199,16 +172,8 @@ export default class UI {
         const gameboardCell = document.createElement("div");
         gameboardCell.dataset.row = row.toString();
         gameboardCell.dataset.column = column.toString();
-        // gameboardCell.classList.add("cell-relative");
+        
         UI.aiBoardGrid.appendChild(gameboardCell);
-
-        // const isShipPlaced = Gameloop.computer.gameboard.grid.some(
-        //   (cell) => cell[0] === row && cell[1] === column && cell[2]
-        // );
-        // if (isShipPlaced) {
-        //   gameboardCell.textContent = "X";
-        //   // gameboardCell.classList.add("myships");
-        // }
 
         for (
           let i = 0;
@@ -295,7 +260,6 @@ export default class UI {
       UI.renderComputerBoard();
 
       const aiBoard = [...document.querySelectorAll(".aiboard-grid div")];
-      const playerBoard = [...document.querySelectorAll(".yourboard-grid div")];
 
       for (let i = 0; i < aiBoard.length; i += 1) {
         if (aiBoard[i].classList.length === 0) {
